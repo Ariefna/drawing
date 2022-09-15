@@ -16,7 +16,7 @@ const createElement = (id, x1, y1, x2, y2, type) => {
     case "pencil":
       return { id, type, points: [{ x: x1, y: y1 }] };
     case "text":
-      return { id, type, x1, y1, x2, y2, text: "" };
+      return { id, type, x1, y1, x2, y2, text: "New Text" };
     default:
       throw new Error(`Type not recognised: ${type}`);
   }
@@ -258,7 +258,7 @@ const App = () => {
           .getElementById("canvas")
           .getContext("2d")
           .measureText(options.text).width;
-        const textHeight = 24;
+        const textHeight = 100;
         elementsCopy[id] = {
           ...createElement(id, x1, y1, x1 + textWidth, y1 + textHeight, type),
           text: options.text,
@@ -313,13 +313,19 @@ const App = () => {
       }
     } else {
       if (tool === "text") {
+        var options = "text";
+        const textWidth = document
+          .getElementById("canvas")
+          .getContext("2d")
+          .measureText(options.text).width;
+        const textHeight = 100;
         const id = elements.length;
         const element = createElement(
           id,
           clientX,
           clientY,
-          clientX,
-          clientY,
+          clientX + textWidth,
+          clientY + textHeight,
           tool
         );
         setElements((prevState) => [...prevState, element]);
